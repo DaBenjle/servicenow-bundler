@@ -23,7 +23,7 @@ npm install --no-save zod
 node build.mjs \
   --entry node_modules/zod \
   --name Zod \
-  --postinit "Zod.config({ jitless: true })" \
+  --postinit "Zod.config({ jitless: true })" \ # Uses custom string eval() that isn't babel'd, so would break everything
   --test "if (Zod.string().parse('hello') !== 'hello') throw new Error('fail')"
 ```
 
