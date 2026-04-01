@@ -12,7 +12,7 @@ node build.mjs --entry <source> --name <global> [--out <file>] [--postinit <code
 |------|----------|-------------|
 | `--entry` | ✓ | Path to the package source (e.g. `node_modules/zod`) |
 | `--name` | ✓ | Global variable name in the bundle (e.g. `Zod`) |
-| `--out` | | Output file path. Defaults to `<name>.bundle.js` in lowercase (e.g. `zod.bundle.js`) |
+| `--out` | | Output file path. Defaults to `bundles/<name>.bundle.js` in lowercase (e.g. `bundles/zod.bundle.js`) |
 | `--postinit` | | JS to append after the bundle (e.g. package config calls) |
 | `--test` | | JS snippet to smoke-test the bundle in Node after building |
 

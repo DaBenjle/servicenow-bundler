@@ -17,7 +17,8 @@ function getArg(flag, required = false) {
 
 const ENTRY = getArg("--entry", true); // e.g. node_modules/zod
 const NAME = getArg("--name", true); // e.g. Zod
-const OUT = getArg("--out") || `${NAME.toLowerCase()}.bundle.js`; // e.g. zod.bundle.js
+const OUT =
+  getArg("--out") || path.join("bundles", `${NAME.toLowerCase()}.bundle.js`); // e.g. bundles/zod.bundle.js
 const POST_INIT = getArg("--postinit"); // e.g. "Zod.config({ jitless: true })"
 const TEST = getArg("--test"); // e.g. "z.string().parse('hello')"
 const TMP_DIR = "rhino-bundle-tmp";
@@ -80,6 +81,8 @@ const entryIndex = fs.existsSync(path.join(TMP_DIR, "index.js"))
   ? path.join(TMP_DIR, "index.js")
   : path.join(TMP_DIR, "index.mjs");
 
+fs.mkdirSync(path.dirname(OUT), { recursive: true });
+
 await esbuild.build({
   entryPoints: [entryIndex],
   bundle: true,
@@ -114,19 +117,24 @@ fs.writeFileSync(OUT, bundle);
 // ── Step 4: Test ──────────────────────────────────────────────────────────────
 if (TEST) {
   console.log(`[4/4] Running test...`);
-  const testScript = `
-    const fs = require("fs");
-    eval(fs.readFileSync(${JSON.stringify(OUT)}, "utf-8"));
-    const ${NAME} = global.${NAME};
-    ${TEST}
-    console.log("Test passed!");
-  `;
+  const testFile = `${NAME}.test.cjs`;
+  fs.writeFileSync(
+    testFile,
+    `
+const fs = require("fs");
+eval(fs.readFileSync(${JSON.stringify(OUT)}, "utf-8"));
+${TEST}
+console.log("Test passed!");
+  `,
+  );
   try {
-    execSync(`node -e ${JSON.stringify(testScript)}`, { stdio: "inherit" });
+    execSync(`node ${testFile}`, { stdio: "inherit" });
   } catch {
     console.error("Test failed!");
+    fs.rmSync(testFile);
     process.exit(1);
   }
+  fs.rmSync(testFile);
 } else {
   console.log(`[4/4] No test specified, skipping.`);
 }

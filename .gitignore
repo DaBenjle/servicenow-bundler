@@ -1,3 +1,4 @@
 node_modules/**
-zod-rhino-tmp/**
-zod.bundle.js
+rhino-bundle-tmp/**
+*.bundle.js
+bundles/**
