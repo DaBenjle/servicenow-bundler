@@ -1,0 +1,29 @@
+{
+  "name": "servicenow-bundler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "node build.mjs",
+    "test": "node -e 'const fs = require(\"fs\"); eval(fs.readFileSync(\"zod.bundle.js\", \"utf-8\")); const z = Zod; try { assert(z.string().parse(\"hello\") === \"hello\"); } catch (e) { console.error(\"Test failed\"); process.exit(1); } console.log(\"All tests passed!\");'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-transform-for-of": "^7.27.1",
+    "@babel/plugin-transform-property-mutators": "^7.28.6",
+    "@babel/plugin-transform-shorthand-properties": "^7.27.1",
+    "@babel/plugin-transform-spread": "^7.28.6",
+    "@babel/preset-env": "^7.29.2",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
+    "babel-plugin-transform-es3-property-literals": "^6.22.0",
+    "esbuild": "^0.27.4"
+  }
+}

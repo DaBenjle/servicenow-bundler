@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": { "rhino": "1.7.14" },
+        "useBuiltIns": false,
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-for-of", { "loose": true }],
+    ["@babel/plugin-transform-spread", { "loose": true }],
+    ["@babel/plugin-transform-shorthand-properties"],
+    ["@babel/plugin-transform-property-mutators"],
+    ["babel-plugin-transform-es3-member-expression-literals"],
+    ["babel-plugin-transform-es3-property-literals"]
+  ],
+  "sourceType": "unambiguous",
+  "ignore": []
+}
