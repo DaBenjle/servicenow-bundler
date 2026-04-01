@@ -17,7 +17,7 @@ function getArg(flag, required = false) {
 
 const ENTRY = getArg("--entry", true); // e.g. node_modules/zod
 const NAME = getArg("--name", true); // e.g. Zod
-const OUT = getArg("--out", true); // e.g. zod.bundle.js
+const OUT = getArg("--out") || `${NAME.toLowerCase()}.bundle.js`; // e.g. zod.bundle.js
 const POST_INIT = getArg("--postinit"); // e.g. "Zod.config({ jitless: true })"
 const TEST = getArg("--test"); // e.g. "z.string().parse('hello')"
 const TMP_DIR = "rhino-bundle-tmp";

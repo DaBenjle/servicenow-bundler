@@ -5,24 +5,24 @@ Bundles modern npm packages into ServiceNow-compatible Script Includes. Handles 
 ## Usage
 
 ```bash
-node build.mjs --entry <source> --name <global> --out <file> [--postinit <code>] [--test <code>]
+node build.mjs --entry <source> --name <global> [--out <file>] [--postinit <code>] [--test <code>]
 ```
 
 | Flag | Required | Description |
 |------|----------|-------------|
 | `--entry` | ✓ | Path to the package source (e.g. `node_modules/zod`) |
 | `--name` | ✓ | Global variable name in the bundle (e.g. `Zod`) |
-| `--out` | ✓ | Output file path (e.g. `zod.bundle.js`) |
+| `--out` | | Output file path. Defaults to `<name>.bundle.js` in lowercase (e.g. `zod.bundle.js`) |
 | `--postinit` | | JS to append after the bundle (e.g. package config calls) |
 | `--test` | | JS snippet to smoke-test the bundle in Node after building |
 
 ## Example: Bundling Zod
 
 ```bash
+npm install --no-save zod
 node build.mjs \
   --entry node_modules/zod \
   --name Zod \
-  --out zod.bundle.js \
   --postinit "Zod.config({ jitless: true })" \
   --test "if (Zod.string().parse('hello') !== 'hello') throw new Error('fail')"
 ```
