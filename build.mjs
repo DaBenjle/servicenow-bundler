@@ -114,7 +114,11 @@ if (POST_INIT) {
 
 fs.writeFileSync(OUT, bundle);
 
-// ── Step 4: Test ──────────────────────────────────────────────────────────────
+// ── Step 4: Prepend globals ───────────────────────────────────────────────────
+const snGlobals = fs.readFileSync("sn-globals.js", "utf-8");
+fs.writeFileSync(OUT, snGlobals + "\n\n" + bundle);
+
+// ── Step 5: Test ──────────────────────────────────────────────────────────────
 if (TEST) {
   console.log(`[4/4] Running test...`);
   const testFile = `${NAME}.test.cjs`;
