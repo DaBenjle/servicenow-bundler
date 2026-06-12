@@ -2,3 +2,4 @@ node_modules/**
 rhino-bundle-tmp/**
 *.bundle.js
 bundles/**
+**/test262/**
